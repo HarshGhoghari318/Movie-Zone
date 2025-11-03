@@ -8,7 +8,7 @@ import Dropdown from './Templates/Dropdown'
 import Loader from './Loader'
 
 function Home() {
-    document.title = 'MOVIES ZONE | HomePage'
+    document.title = 'MOVIES ZONE'
     const [wallpaper, setwallpaper] = useState(null);
     const [trending, settrending] = useState(null);
     const [category, setcategory] = useState("all");
