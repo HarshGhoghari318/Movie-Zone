@@ -24,8 +24,8 @@ function Contact() {
         <div className="mt-6">
           <h3 className="text-2xl font-semibold text-white">Contact Us:</h3>
           <ul className="mt-3 space-y-3 text-gray-300">
-            <li>📧 <span className="text-white font-semibold">Email:</span> kahananghan9383@gmail.com</li>
-            <li>📞 <span className="text-white font-semibold">Phone:</span> +91 82641 09896</li>
+            <li>📧 <span className="text-white font-semibold">Email:</span> harshghoghari77@gmail.com</li>
+            <li>📞 <span className="text-white font-semibold">Phone:</span> +91 9925936842</li>
             <li>📍 <span className="text-white font-semibold">Address:</span> Surat, Gujarat, India</li>
           </ul>
         </div>
