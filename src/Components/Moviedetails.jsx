@@ -24,75 +24,91 @@ function Moviedetails() {
                 backgroundPosition: "center",
                 backgroundSize: "cover", 
               }}
-        className='relative w-full h-[150vh] px-[10%]'>
+        className='relative w-full min-h-screen px-4 sm:px-6 md:px-[10%] py-4 sm:py-6'>
 
-      <nav className='h-[10vh] w-full flex items-center text-zinc-100 text-xl gap-8'>
-        <Link> <i onClick={() => navigate(-1)} className="hover:text-[#6556CD] ri-arrow-left-line"></i></Link>
-        <a target='_blanck' href={info.detail.homepage}><i className="ri-earth-line"></i></a>
-        <a target='_blanck' href={`https://www.wikidata.org/wiki/${info.externalid.wikidata_id}`}><i className="ri-external-link-line"></i></a>
-        <a target='_blanck' href={`https://www.imdb.com/title/${info.externalid.imdb_id}`}>imdb</a>
+      <nav className='h-[10vh] min-h-[60px] w-full flex items-center text-zinc-100 text-lg sm:text-xl gap-4 sm:gap-8 flex-wrap'>
+        <Link> <i onClick={() => navigate(-1)} className="hover:text-[#6556CD] ri-arrow-left-line cursor-pointer"></i></Link>
+        {info.detail.homepage && (
+          <a target='_blank' rel="noopener noreferrer" href={info.detail.homepage} className='hover:text-[#6556CD] transition-colors'><i className="ri-earth-line"></i></a>
+        )}
+        {info.externalid?.wikidata_id && (
+          <a target='_blank' rel="noopener noreferrer" href={`https://www.wikidata.org/wiki/${info.externalid.wikidata_id}`} className='hover:text-[#6556CD] transition-colors'><i className="ri-external-link-line"></i></a>
+        )}
+        {info.externalid?.imdb_id && (
+          <a target='_blank' rel="noopener noreferrer" href={`https://www.imdb.com/title/${info.externalid.imdb_id}`} className='hover:text-[#6556CD] transition-colors text-sm sm:text-base'>imdb</a>
+        )}
       </nav>
       
-      <div className='w-full flex'>
-        <img className='shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)] h-[50vh] object-cover' src={`https://image.tmdb.org/t/p/original/${info.detail.poster_path || info.detail.backdrop_path}`}  />
+      <div className='w-full flex flex-col md:flex-row gap-4 md:gap-0 mt-4'>
+        <img className='shadow-[8px_17px_38px_2px_rgba(0,0,0,0.5)] w-full md:w-auto md:h-[50vh] object-cover rounded-lg md:rounded-none' src={`https://image.tmdb.org/t/p/original/${info.detail.poster_path || info.detail.backdrop_path}`}  />
         
-        <div className=' ml-[5%] text-white'>
-          <h1 className='text-5xl text-white font-black'>
+        <div className='md:ml-[5%] text-white w-full md:w-auto'>
+          <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white font-black leading-tight'>
             {info.detail.name || info.detail.title || info.detail.origial_name || info.detail.original_title}
-            <small className='text-2xl text-zinc-200 font-bold '>({info.detail.release_date.split("-")[0]})</small>
+            {info.detail.release_date && (
+              <small className='text-lg sm:text-xl md:text-2xl text-zinc-200 font-bold block sm:inline sm:ml-2'>({info.detail.release_date.split("-")[0]})</small>
+            )}
           </h1>
 
-          <div className=' flex gap-x-5 items-center mt-3 mb-3'>
-            <div className=' w-[5vh] h-[5vh] rounded-full bg-[#6556CD] text-white flex justify-center items-center' >
+          <div className='flex flex-wrap gap-3 sm:gap-x-5 items-center mt-3 mb-3 text-sm sm:text-base'>
+            <div className='w-[40px] h-[40px] sm:w-[5vh] sm:h-[5vh] rounded-full bg-[#6556CD] text-white flex justify-center items-center text-xs sm:text-sm font-bold' >
             {(info.detail.vote_average*10).toFixed()}{"%"}
             </div>
-            <h1>{info.detail.release_date}</h1>
-            <h1>{info.detail.genres.map((g) => g.name).join(",")}</h1>
-            <h1>{info.detail.runtime}min</h1>
+            {info.detail.release_date && <h1>{info.detail.release_date}</h1>}
+            {info.detail.genres && info.detail.genres.length > 0 && (
+              <h1 className='text-xs sm:text-sm'>{info.detail.genres.map((g) => g.name).join(", ")}</h1>
+            )}
+            {info.detail.runtime && <h1>{info.detail.runtime}min</h1>}
           </div>
 
-          <h1 className='text-xl font-semibold italic text-zinc-100 mb-3'>{info.detail.tagline}</h1>
+          {info.detail.tagline && (
+            <h1 className='text-base sm:text-lg md:text-xl font-semibold italic text-zinc-100 mb-3'>{info.detail.tagline}</h1>
+          )}
 
-          <h1 className='text-xl  font-semibold'>Overview</h1>
-          <p className='text-sm'>{info.detail.overview}</p>
+          <h1 className='text-lg sm:text-xl font-semibold mb-2'>Overview</h1>
+          <p className='text-sm sm:text-base leading-relaxed'>{info.detail.overview}</p>
 
-          <h1 className='text-xl  font-semibold mt-3'>Movie Translated</h1>
-          <p className='text-sm mb-7'>{(info?.translations ?? []).join(", ")}</p>
+          {info?.translations && info.translations.length > 0 && (
+            <>
+              <h1 className='text-lg sm:text-xl font-semibold mt-4 mb-2'>Movie Translated</h1>
+              <p className='text-sm sm:text-base mb-7'>{info.translations.join(", ")}</p>
+            </>
+          )}
 
-          <Link className=' px-5 py-3 rounded-lg bg-[#6556CD]' to={`${pathname}/trailer`}>
-           <i className='ri-play-fill mr-1 text-xl'></i>Play Trailer
+          <Link className='inline-flex items-center px-4 sm:px-5 py-2 sm:py-3 rounded-lg bg-[#6556CD] hover:bg-[#5545BD] text-sm sm:text-base transition-colors mt-4' to={`${pathname}/trailer`}>
+           <i className='ri-play-fill mr-1 text-lg sm:text-xl'></i>Play Trailer
           </Link>
         </div>
 
       </div>
       
 
-      <div className='w-[80%] flex flex-col gap-y-5 mt-5'>
+      <div className='w-full md:w-[80%] flex flex-col gap-y-4 sm:gap-y-5 mt-5'>
         {info.watchproviders && info.watchproviders.flatrate && 
-        <div className='flex gap-x-5 items-center text-white'>
-          <h1>Available on Platforms</h1>
+        <div className='flex flex-wrap gap-3 sm:gap-x-5 items-center text-white'>
+          <h1 className='text-sm sm:text-base font-semibold w-full sm:w-auto mb-2 sm:mb-0'>Available on Platforms</h1>
           {info.watchproviders.flatrate.map((w,i) =>   
-            <img key={i} title={w.provider_name} className='w-[7vh] h-[7vh] rounded-md object-cover ' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} />)}
+            <img key={i} title={w.provider_name} className='w-[50px] h-[50px] sm:w-[7vh] sm:h-[7vh] rounded-md object-cover' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} alt={w.provider_name} />)}
         </div>
       }
        {info.watchproviders && info.watchproviders.rent && 
-        <div className='flex gap-x-5 items-center text-white'>
-          <h1>Available on Rent</h1>
+        <div className='flex flex-wrap gap-3 sm:gap-x-5 items-center text-white'>
+          <h1 className='text-sm sm:text-base font-semibold w-full sm:w-auto mb-2 sm:mb-0'>Available on Rent</h1>
           {info.watchproviders.rent.map((w,i) =>   
-            <img key={i} title={w.provider_name} className='w-[7vh] h-[7vh] rounded-md object-cover ' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} />)}
+            <img key={i} title={w.provider_name} className='w-[50px] h-[50px] sm:w-[7vh] sm:h-[7vh] rounded-md object-cover' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} alt={w.provider_name} />)}
         </div>
       }
        {info.watchproviders && info.watchproviders.buy && 
-        <div className='flex gap-x-5 items-center text-white'>
-          <h1>Available to Buy</h1>
+        <div className='flex flex-wrap gap-3 sm:gap-x-5 items-center text-white'>
+          <h1 className='text-sm sm:text-base font-semibold w-full sm:w-auto mb-2 sm:mb-0'>Available to Buy</h1>
           {info.watchproviders.buy.map((w,i) =>   
-            <img key={i} title={w.provider_name} className='w-[7vh] h-[7vh] rounded-md object-cover ' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} />)}
+            <img key={i} title={w.provider_name} className='w-[50px] h-[50px] sm:w-[7vh] sm:h-[7vh] rounded-md object-cover' src={`https://image.tmdb.org/t/p/original/${w.logo_path}`} alt={w.provider_name} />)}
         </div>
       }
       </div>
 
-      <hr className='mt-10 mb-5 border-none h-[1px] bg-zinc-300' />
-      <h1 className='text-white text-2xl font-bold mt-5'>Recommendations & Similar</h1>
+      <hr className='mt-8 sm:mt-10 mb-5 border-none h-[1px] bg-zinc-300' />
+      <h1 className='text-white text-xl sm:text-2xl font-bold mt-5 mb-4'>Recommendations & Similar</h1>
       <Horizoncard data={
         info.recommendations.length > 0 ? info.recommendations : info.similar 
       } />

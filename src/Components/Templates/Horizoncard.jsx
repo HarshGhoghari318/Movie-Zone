@@ -4,13 +4,13 @@ import download from '../../../public/download.png'
 
 function Horizoncard({data}) {
   return (
-      <div className='w-full p-6'>
-        <div className='flex gap-6 overflow-x-auto pb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
+      <div className='w-full p-4 sm:p-6'>
+        <div className='flex gap-4 sm:gap-6 overflow-x-auto pb-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
           {data.length > 0 ? data.map((data,index) => 
               <Link 
                 to={`/${data.media_type}/details/${data.id}`} 
                 key={index} 
-                className='group flex-shrink-0 w-[300px] bg-gray-900 rounded-xl overflow-hidden hover:scale-105 transition-all duration-300 border border-gray-800/50'
+                className='group flex-shrink-0 w-[250px] sm:w-[280px] md:w-[300px] bg-gray-900 rounded-xl overflow-hidden hover:scale-105 transition-all duration-300 border border-gray-800/50'
               >
                   <div className='relative aspect-video'>
                     <img 
@@ -22,11 +22,11 @@ function Horizoncard({data}) {
                     />
                     <div className='absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent'></div>
                   </div>
-                  <div className='p-4'>
-                      <h1 className='text-lg font-medium text-gray-100 line-clamp-1 mb-2'>
+                  <div className='p-3 sm:p-4'>
+                      <h1 className='text-base sm:text-lg font-medium text-gray-100 line-clamp-1 mb-2'>
                         {data.name || data.title || data.origial_name || data.original_title}
                       </h1>
-                      <p className='text-sm text-gray-400 line-clamp-2'>
+                      <p className='text-xs sm:text-sm text-gray-400 line-clamp-2'>
                           {data.overview || 'No description available.'}
                       </p>
                       <div className='mt-3 inline-flex items-center text-xs font-medium text-purple-400 hover:text-pink-400 transition-colors'>
@@ -39,7 +39,7 @@ function Horizoncard({data}) {
               </Link>
           ): (
             <div className='w-full flex items-center justify-center py-12'>
-              <h1 className='text-xl text-gray-400 font-medium'>Nothing to show</h1>
+              <h1 className='text-lg sm:text-xl text-gray-400 font-medium'>Nothing to show</h1>
             </div>
           )}
         </div>

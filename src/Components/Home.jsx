@@ -42,13 +42,13 @@ function Home() {
   return wallpaper && trending ? (
     <>
         <Sidenav/>
-        <div className=' w-[80%] h-screen overflow-auto overflow-x-hidden'>
+        <div className='w-full lg:w-[80%] h-screen overflow-auto overflow-x-hidden'>
           <Topnav/>
           <Header data={wallpaper}  />
 
-          <div className='w-full p-5 '>
-            <div className=' flex justify-between'>
-              <h1 className='text-3xl font-semibold text-zinc-400'>Trending</h1>
+          <div className='w-full p-4 sm:p-5'>
+            <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0'>
+              <h1 className='text-2xl sm:text-3xl font-semibold text-zinc-400'>Trending</h1>
               <Dropdown title="Filter" option={['tv','movie','all']} func={(e) => setcategory(e.target.value)} />
             </div> 
           </div>

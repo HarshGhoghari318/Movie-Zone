@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, createContext } from 'react'
 import {Route,Routes} from 'react-router-dom'
 import Home from './Components/Home' 
 import Trending from './Components/Trending'
@@ -14,32 +14,38 @@ import Peopledetails from './Components/Peopledetails'
 import Trailer from './Components/Templates/Trailer'
 import NotFound from './Components/NotFound'
 
+export const MobileMenuContext = createContext();
+
 function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div className='bg-[#1F1E24] w-screen h-screen flex overflow-x-hidden'>
-      
-    <Routes>
+    <MobileMenuContext.Provider value={{ isMobileMenuOpen, setIsMobileMenuOpen }}>
+      <div className='bg-[#1F1E24] w-screen min-h-screen flex overflow-x-hidden'>
+        
+      <Routes>
 
-      <Route path="/" element={<Home />} />
-      <Route path="/trending" element={<Trending />} />
-      <Route path="/popular" element={<Popular />} />
-      <Route path="/movies" element={<Movies />} />
-      <Route path="/movie/details/:id" element={<Moviedetails />} >
-        <Route path="/movie/details/:id/trailer" element={<Trailer />} />
-      </Route>
-      <Route path="/tvshows" element={<TvShows />} />
-      <Route path="/tv/details/:id" element={<Tvshowdetails />} >
-        <Route path="/tv/details/:id/trailer" element={<Trailer />} />
-      </Route>
-      <Route path="/people" element={<People />} />
-      <Route path="/person/details/:id" element={<Peopledetails />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="*" element={<NotFound />} />
-      
-    </Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/trending" element={<Trending />} />
+        <Route path="/popular" element={<Popular />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movie/details/:id" element={<Moviedetails />} >
+          <Route path="/movie/details/:id/trailer" element={<Trailer />} />
+        </Route>
+        <Route path="/tvshows" element={<TvShows />} />
+        <Route path="/tv/details/:id" element={<Tvshowdetails />} >
+          <Route path="/tv/details/:id/trailer" element={<Trailer />} />
+        </Route>
+        <Route path="/people" element={<People />} />
+        <Route path="/person/details/:id" element={<Peopledetails />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+        
+      </Routes>
 
-    </div>
+      </div>
+    </MobileMenuContext.Provider>
   )
 }
 

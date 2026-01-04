@@ -7,6 +7,7 @@ import axios from '../utils/axios';
 import Cards from './Templates/Cards';
 import Loader from './Loader';
 import InfiniteScroll from "react-infinite-scroll-component";
+import Sidenav from './Templates/Sidenav';
 
 function Trending() {
     document.title = 'MOVIES WORLD | Trending Page'
@@ -47,30 +48,36 @@ function Trending() {
       }, [category, duration])
 
   return trending.length > 0 ? (
-    <div className='w-full h-screen px-[3%] overflow-y-auto'>
-
-      <div className='w-full flex items-center'>
-        <h1 className='text-2xl font-semibold text-zinc-400 flex'>
-            <i onClick={() => navigate(-1)} className="hover:text-[#6556CD] ri-arrow-left-line mr-2"></i>
-            Trending
-        </h1>
-
+    <>
+      <Sidenav/>
+      <div className='w-full lg:w-[80%] h-screen overflow-y-auto'>
         <Topnav />
-        <Dropdown title="Category" option={["tv","movie","all"]} func={(e) => setcategory(e.target.value)} /> 
-        <div className='w-[3%]' ></div>
-        <Dropdown title="Duration" option={["day","week"]} func={(e) => setduration(e.target.value)} /> 
-      </div>
+        
+        <div className='w-full px-4 sm:px-6 lg:px-[3%] py-4'>
+          <div className='w-full flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 flex-wrap'>
+            <h1 className='text-xl sm:text-2xl font-semibold text-zinc-400 flex items-center'>
+                <i onClick={() => navigate(-1)} className="hover:text-[#6556CD] ri-arrow-left-line mr-2 cursor-pointer"></i>
+                Trending
+            </h1>
 
-    <InfiniteScroll 
-        dataLength={trending.length}
-        next={gettrending()}
-        hasMore={hasMore}
-        loader={<Loader/>}
-    >
-        <Cards data={trending} title={category}/>
-    </InfiniteScroll>
-      
-    </div>
+            <div className='flex-1'></div>
+            <div className='flex gap-3 flex-wrap'>
+              <Dropdown title="Category" option={["tv","movie","all"]} func={(e) => setcategory(e.target.value)} /> 
+              <Dropdown title="Duration" option={["day","week"]} func={(e) => setduration(e.target.value)} /> 
+            </div>
+          </div>
+
+          <InfiniteScroll 
+              dataLength={trending.length}
+              next={gettrending()}
+              hasMore={hasMore}
+              loader={<Loader/>}
+          >
+              <Cards data={trending} title={category}/>
+          </InfiniteScroll>
+        </div>
+      </div>
+    </>
 
   ) : (<Loader/>)
 }
